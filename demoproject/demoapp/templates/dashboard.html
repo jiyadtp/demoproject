@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="utf-8" />
+    <title>Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="" name="description" />
+    <meta content="Coderthemes" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+
+
+
+    <link rel="stylesheet" href="{% static 'css1/morris.css' %}">
+    <!-- App css -->
+    <link href="{% static 'css1/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css1/icons.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css1/style.css' %}" rel="stylesheet" type="text/css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/16b0815225.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'datatable/jquery.dataTables.min.css' %}">
+    <link rel="stylesheet" href="{% static 'datatable/responsive.dataTables.min.css' %}">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+
+<div class="tab-pane" id="payroll" role="tabpanel">
+    <div class="container-fluid px-0 payroll-page">
+        <div class="row">
+            <div class="col-lg-12 px-0 mt-4">
+                <div class="card" id="orderList">
+                    <div class="card-body bb-0 pt-0 p-0">
+                        <div>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="home1" role="tabpanel">
+                                    <div
+                                        class="d-flex align-items-center justify-content-between px-2">
+                                        <div class="col-md-4 px-0">
+                                            <a href="#"><button type="button"
+                                                    class="btn btn-prim add-btn add_url"><i
+                                                        class="fas fa-plus"></i>
+                                                    Create
+                                                </button></a>
+                                        </div>
+
+                                        <div class="d-flex align-items-center">
+                                            <div class="btn-group fitr">
+                                                <button type="button" class="btn btn-prim"><a style="color:white;" href="logout">
+                                                    Logout</a>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Tab panes -->
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="ho" role="tabpanel">
+                                            <div class="table-responsive mb-1  mt-2">
+                                                <table class="table table-nowrap align-middle"
+                                                    id="orderTable">
+                                                    <thead class="table-light">
+                                                        <tr class="text-uppercase">
+                                                            <th class="sort" data-sort="name">
+                                                                Name</th>
+                                                            <th class="sort"
+                                                                data-sort="phone_number">
+                                                                Email
+                                                            </th>
+                                                            <th class="sort">
+                                                                Phone Number
+                                                            </th>
+                                                            <th class="sort">
+                                                                Age
+                                                            </th>
+                                                            <th class="sort">
+                                                                Action
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="list form-check-all">
+                                                    {% for i in data %}
+                                                        <tr>
+                                                            <td>{{i.name}}</td>
+                                                            <td>{{i.email}}</td>
+                                                            <td>{{i.phone}}</td>
+                                                            <td>{{i.age}}</td>
+                                                            <td><a href="#" class="edit_url" style="color:black" data-id="{{i.id}}">
+                                                                <i class="fa fa-edit"></i>
+                                                            </a>
+                                                            <button class="btn btn-xs" onclick="return confirm('Are You Sure to Delete ?')"><a href="delete-employee/{{i.id}}" style="color:black">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a></button></td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+    </div>
+</div>
+
+
+
+
+
+
+<div id="add_url_modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <form class="form-horizontal auth-form" id="employee_form" action="dashboard" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Employees</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <div class="form-group mb-2">
+                                <label class="form-label" for="firstname">Name</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="name" required>
+                                </div>
+                            </div><!--end form-group-->
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-2">
+                                <label class="form-label" for="firstname">Email</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="email" required>
+                                </div>
+                            </div><!--end form-group-->
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group mb-2">
+                                <label class="form-label" for="firstname">Phone</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control number_input" name="phone" required>
+                                </div>
+                            </div><!--end form-group-->
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-2">
+                                <label class="form-label" for="firstname">Age</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control number_input" name="age" required>
+                                </div>
+                            </div><!--end form-group-->
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-prim" onclick="employee_submit()">Submit</button>
+                    <button type="button" class="btn btn-default ml-2" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="edit_employee"></div>
+
+<script src="{% static 'js1/jquery.min.js' %}"></script>
+<script src="{% static 'js1/custome.js' %}"></script>
+<script src="{% static 'js1/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'datatable1/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'datatable1/dataTables.responsive.min.js' %}"></script>
+
+<script>
+    $(document).on('click','.add_url', function()
+    {
+        $('#add_url_modal').modal('show');
+    });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+{% if messages %}
+    <script>
+        {% for message in messages %}
+
+
+        var toastMixin = Swal.mixin({
+        toast: true,
+        icon: '{{message.tags}}',
+        title: 'General Title',
+        animation: false,
+        position: 'top-right',
+        showConfirmButton: false,
+        timer: 5000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+        });
+        toastMixin.fire({
+        animation: true,
+        title: "{{message}}"
+        });
+        {% endfor %}
+
+    </script>
+    {% endif %}
+
+<script>
+    function employee_submit(){
+        event.preventDefault()
+        var form_data = new FormData($('#employee_form')[0]);
+        $.ajax({
+            type: 'POST',
+            url: "create-employee",
+            data: form_data,
+            processData: false,
+            contentType: false,
+            success: function(data)
+            {
+                status = data['status']
+                message = data['message']
+                if (status == "success"){
+                    document.getElementById('employee_form').submit();
+                }
+                var toastMixin = Swal.mixin({
+                toast: true,
+                icon: status,
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+                });
+                toastMixin.fire({
+                animation: true,
+                title: message
+                });
+
+
+            }
+        })
+
+    }
+</script>
+
+
+<script>
+    $(".edit_url").click(function(){
+        var id = $(this).attr("data-id")
+        var url ="edit-employee";
+        $.ajax({
+        url: url,
+        data: {
+          'id': id
+        },
+        success: function (data) {
+            $("#edit_employee").html(data);
+            $('#edit_employee_modal').modal('show');
+        }
+      });
+    })
+</script>
+
+
+<script>
+  var inputs = document.getElementsByClassName("number_input");
+  for (var i = 0; i < inputs.length; i++) {
+    inputs[i].addEventListener("input", function() {
+      this.value = this.value.replace(/[^0-9+]/g, ''); // Allow only numbers and "+"
+    });
+  }
+</script>
+
+</body>
+</html>
